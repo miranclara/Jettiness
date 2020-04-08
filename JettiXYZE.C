@@ -90,11 +90,12 @@ void jettiness()
 
 
   // open input file
-//  inputFile =  TFile::Open( "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2016/ggH125/ZZ4lAnalysis.root" );
-// inputFile =  TFile::Open( "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2017/ggH125/ZZ4lAnalysis.root" );
- // inputFile =  TFile::Open( "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2018/ggH125/ZZ4lAnalysis.root" );
-  inputFile =  TFile::Open( "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2016/ttH125/ZZ4lAnalysis.root" );
-  inputFile =  TFile::Open( "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2017/ttH125/ZZ4lAnalysis.root" );
+  //inputFile =  TFile::Open( "/afs/cern.ch/user/m/mrkim/HZZ/CMSSW_10_2_18/src/ZZAnalysis/AnalysisStep/test/ZZ4lAnalysis.root" );
+  //inputFile =  TFile::Open( "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2016/ggH125/ZZ4lAnalysis.root" );
+  //inputFile =  TFile::Open( "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2017/ggH125/ZZ4lAnalysis.root" );
+  //  inputFile =  TFile::Open( "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2018/ggH125/ZZ4lAnalysis.root" );
+//  inputFile =  TFile::Open( "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2016/ttH125/ZZ4lAnalysis.root" );
+  //inputFile =  TFile::Open( "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2017/ttH125/ZZ4lAnalysis.root" );
   inputFile =  TFile::Open( "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2018/ttH125/ZZ4lAnalysis.root" );
   float lumi = 59.7; //fb-1
 
@@ -128,20 +129,61 @@ void jettiness()
 
   TH1F* HiggsMass = new TH1F("HiggsMass","Higgs Mass",100,70.,300.);
   TH1F* JetMass_H = new TH1F("JetMass_H","JetMass_H",100,0.,150.);
-  TH1F* JetN = new TH1F("JetN","ggH_JetN",50,0.,50.);//Number of Jets
-  //TH1F* Jetti0 = new TH1F("Jetti0","ggH_Jetti0",6000,-1.,2.);//Number of Jets
-  TH1F* Jetti1 = new TH1F("Jetti1","ggH_Jetti1",80,-2.,2.);//Number of Jets
-  TH1F* Jetti2 = new TH1F("Jetti2","ggH_Jetti2",60,-1.,2.);//Number of Jets
-  //TH1F* Jetti012 = new TH1F("Jetti012","ggH_Jetti012",200,-5.,5.);//Number of Jets
-  TH1F* Jetti012 = new TH1F("Jetti012","ttH_Jetti012",200,-5.,5.);//Number of Jets
-  //TH1F* Jetti0 = new TH1F("Jetti0","ttH_Jetti0",200,-5.,5.);//Number of Jets
-  //TH1F* Jetti1 = new TH1F("Jetti1","ttH_Jetti1",80,-2.,2.);//Number of Jets
-  //TH1F* Jetti2 = new TH1F("Jetti2","ttH_Jetti2",80,-2.,2.);//Number of Jets
-  //TH1F* JetEta = new TH1F("JetEta","JetEta",100,70.,300.);
- // TH1F* HiggsMass = new TH1F("HiggsMass","Higgs Mass",100,70.,300.);
- // TH1F* HiggsMass = new(TH1F("HiggsMass","Higgs Mass",100,70.,300.);
+  //TH1F* WgtOAEW= new TH1F("WgtOAEW","WgtOAEW",100.,-100,100);  
+  TH1F* WgtEW= new TH1F("WgtEW","WgtEW",100.,-10,10);  
+//  TH1F* xsec= new TH1F("xsec","xsec",100.,-10,10);  
+
+} //end multiRoot function
+ /*
+//---------------------------ggH-----------------------------------
+ TH1F* JetN = new TH1F("JetN","ggH_JetN",20,0.,20.);//Number of Jets
+ Int_t maxJN=14;//Max number of Jet in event
+  TString JN[14]={"JetN0","JetN1","JetN2","JetN3","JetN4","JetN5","JetN6","JetN7","JetN8","JetN9","JetN10","JetN11","JetN12","JetN13"};//Number of Jet
+  TString Jtt[14]={"Jetti_0","Jetti_1","Jetti_2","Jetti_3","Jetti_4","Jetti_5","Jetti_6","Jetti_7","Jetti_8","Jetti_9","Jetti_10","Jetti_11","Jetti_12","Jetti_13"};//Number of Jettiness
+  
+  TH1F* Jetti[maxJN];
+  for(Int_t k=0;k<maxJN;k++){
+ 	Jetti[k]= new TH1F("ggH_"+Jtt[k],"ggH_"+Jtt[k],80,-2.,2.);//Number of Jets
+  }
+
+  TH1F* JetNJetti[maxJN][maxJN];
+  for(Int_t jn=0;jn<maxJN;jn++){
+	for(Int_t k=0;k<jn+1;k++){
+  	JetNJetti[jn][k]= new TH1F("ggH_"+JN[jn]+"_"+Jtt[k],"ggH_"+JN[jn]+"_"+Jtt[k],80,-2.,2.);//Number of Jets
+  	}
+  }
+
+  TH1F* Jetti2 = new TH1F("Jetti2","ggH_Jettiness",80,-2.,2.);//Number of Jets
+  TH1F* Jetti1 = new TH1F("Jetti1","ggH_Jettiness",80,-2.,2.);//Number of Jets
+  TH1F* Jetti0= new TH1F("Jetti0","ggH_Jettiness",320,-8.,8.);//Number of Jets
+  TH1F* Jetti2_Jet3 = new TH1F("Jetti2_Jet3","ggH_Jetti2 Jet>2",80,-2.,2.);//Number of Jets
+  TH1F* Jetti2_Jet2 = new TH1F("Jetti2_Jet2","ggH_Jetti2 Jet=2",80,-2.,2.);//Number of Jets
+  TH1F* Jetti1_Jet2 = new TH1F("Jetti1_Jet2","ggH_Jetti1 Jet=2",80,-2.,2.);//Number of Jets
+  TH1F* Jetti0_Jet2 = new TH1F("Jetti0_Jet2","ggH_Jetti0 Jet=2",80,-2.,2.);//Number of Jets
+  TH1F* Jetti1_Jet1 = new TH1F("Jetti1_Jet1","ggH_Jetti1 Jet=1",80,-2.,2.);//Number of Jets
+  TH1F* Jetti0_Jet1 = new TH1F("Jetti0_Jet1","ggH_Jetti0 Jet=1",80,-2.,2.);//Number of Jets
+  TH1F* Jetti0_Jet0 = new TH1F("Jetti0_Jet0","ggH_Jetti0 Jet=0",80,-2.,2.);//Number of Jets
+ */
+
+ //---------------------------ttH-----------------------------------
+ TH1F* JetN = new TH1F("JetN","ttH_JetN",20,0.,20.);//Number of Jets
+ Int_t maxJN=18;
+ TString JN[18]={"JetN0","JetN1","JetN2","JetN3","JetN4","JetN5","JetN6","JetN7","JetN8","JetN9","JetN10","JetN11","JetN12","JetN13","JetN14","JetN15","JetN16","JetN17"};//Number of Jet
+  TString Jtt[18]={"Jetti_0","Jetti_1","Jetti_2","Jetti_3","Jetti_4","Jetti_5","Jetti_6","Jetti_7","Jetti_8","Jetti_9","Jetti_10","Jetti_11","Jetti_12","Jetti_13","Jetti_14","Jetti_15","Jetti_16","Jetti_17"};//Number of Jettiness
+ 
+  TH1F* Jetti[maxJN];
+  for(Int_t k=0;k<maxJN;k++){
+ 	Jetti[k]= new TH1F("ttH_"+Jtt[k],"ttH_"+Jtt[k],400,-10.,10.);//Number of Jets
+  }
+
+  TH1F* JetNJetti[maxJN][maxJN];
+  for(Int_t jn=0;jn<maxJN;jn++){
+	for(Int_t k=0;k<jn+1;k++){
+  	JetNJetti[jn][k]= new TH1F("ttH_"+JN[jn]+"_"+Jtt[k],"ttH_"+JN[jn]+"_"+Jtt[k],400,-10.,10.);//Number of Jets
+  	}
+  }
    
-   
+  Double_t eventWeight = partialSampleWeight * xsec * overallEventWeight ;
 //-------------Normal vertor of direction Z to Pt,Eta,Phi coordiatte--------------//
   TLorentzVector v4_na(0.0,0.0,1.0,1.0);//xyzE
   TLorentzVector v4_nb(0.0,0.0,-1.0,1.0);//xy-zE
@@ -165,12 +207,12 @@ void jettiness()
   Float_t mu_mass=0.10566;//Gev/c^2
  // Float_t JetE[Jet_N];
   
-  Long64_t entries = inputTree->GetEntries();
   //------------------------- Loop over tree entries--------------------------//  
+  Long64_t entries = inputTree->GetEntries();
       
   myfile<<"entry "<<"ExraLep_N "<<"Jet_N  "<<"Jettiness[0]	"<<"Jettiness[1]	"<<"Jettiness[2]	"<<endl;
-   // for (Long64_t entry= 0; entry < entries; entry++){
-  for (Long64_t entry = 0; entry < 10; entry++) {   
+  for (Long64_t entry= 0; entry < entries; entry++){
+  //for (Long64_t entry = 0; entry < 100; entry++) {   
       
       inputTree->GetEntry(entry);
       cout<<"------entry="<<entry<<"-----------"<<endl;
@@ -324,11 +366,14 @@ void jettiness()
 	Jettiness[0]=1000;//Initialize
 	Jettiness[1]=1000;//Initialize
 	Jettiness[2]=1000;//Initialize
+
 //-----------------(ExtraLep_N=0) Calculation of Jettineis[0] to [2]----------------//
       if(ExtraLep_N==0){
 		if(Jet_N==0){ 
 			Jettiness[0]=0;
 			cout<<"Jettiness[0]="<<Jettiness[0]<<endl;
+		//Jetti0_Jet0->Fill(Jettiness[0]);
+		JetNJetti[Jet_N][0]->Fill(Jettiness[0]);
 		}//End of if(Jet_N==0)
 		
 		else if(Jet_N==1){
@@ -351,7 +396,8 @@ void jettiness()
 			cout<<"Q^2["<<0<<"]="<<QQ[0]<<endl;
 			//myfile<<"Jettiness["<<0<<"]="<<Jettiness[0]<<endl;
 			cout<<"Jettiness[0]="<<Jettiness[0]<<endl;
-			//Jetti0->Fill(Jettiness[0]);//Jet Number  
+			//Jetti0_Jet1->Fill(Jettiness[0],);//Jet Number  
+			JetNJetti[Jet_N][0]->Fill(Jettiness[0]);
 			
 			//-----------Jettiness[1]-------------------
 			TauSum[1]=0;//Becaus no particles can be considered as Pk
@@ -359,7 +405,8 @@ void jettiness()
 			cout<<"Q^2["<<1<<"]="<<QQ[1]<<endl;
 			//myfile<<"Jettiness["<<1<<"]="<<Jettiness[1]<<endl;
 			cout<<"Jettiness[1]="<<Jettiness[1]<<endl;		
-      			//Jetti1->Fill(Jettiness[1]);//Jet Number  
+      			//Jetti1_Jet1->Fill(Jettiness[1],);//Jet Number  
+			JetNJetti[Jet_N][1]->Fill(Jettiness[1]);
 		}//End of else if(Jet_N==1)
 
 		else if(Jet_N>=2){
@@ -384,7 +431,9 @@ void jettiness()
 			//myfile<<"Jettiness["<<0<<"]="<<Jettiness[0]<<endl;
 			cout<<"Jettiness[0]="<<Jettiness[0]<<endl;
 			
-		      	//Jetti0->Fill(Jettiness[0]);//Jet Number  
+		      	//Jetti0_Jet2->Fill(Jettiness[0],);//Jet Number  
+			JetNJetti[Jet_N][0]->Fill(Jettiness[0]);
+
 	
 		//------------Jettiness[1]:One Jet is considerd as signal and others as Pk-------------------
 			for(Int_t j=1;j<Jet_N;j++){
@@ -408,7 +457,8 @@ void jettiness()
 			cout<<"Q^2["<<1<<"]="<<QQ[1]<<endl;
 			//myfile<<"Jettiness["<<1<<"]="<<TauSum[1]<<endl;
 			cout<<"Jettiness[1]="<<Jettiness[1]<<endl;
-      			//Jetti1->Fill(Jettiness[1]);//Jet Number
+      			//Jetti1_Jet2->Fill(Jettiness[1],);//Jet Number
+			JetNJetti[Jet_N][1]->Fill(Jettiness[1]);
 
 			if(Jet_N==2){
 				//-----------Jettiness[2]-------------------
@@ -417,40 +467,46 @@ void jettiness()
 				cout<<"Q^2["<<2<<"]="<<QQ[2]<<endl;
 				//myfile<<"Jettiness["<<2<<"]="<<Jettiness[2]<<endl;
 				cout<<"Jettiness[2]="<<Jettiness[2]<<endl;		
-      				//Jetti2->Fill(Jettiness[2]);//Jet Number
+      				//Jetti2_Jet2->Fill(Jettiness[2],);//Jet Number
+				JetNJetti[Jet_N][2]->Fill(Jettiness[2]);
       			}//End of If(JetN==2)
   
 			if(Jet_N>2){
 
 			//---Jettiness[2]:Tow Jets are considered as signals and others as Pk-----
-				for(Int_t j=2;j<Jet_N;j++){
-					Tau[2][0]=v4_qa[1]*v4_Jet[j];
-					Tau[2][1]=v4_qb[1]*v4_Jet[j];
-					Tau[2][2]=v4_Jet[0]*v4_Jet[j];
-					Tau[2][3]=v4_Jet[1]*v4_Jet[j];
-					cout<<"Tau[2][0]="<<Tau[2][0]<<endl;
-					cout<<"Tau[2][1]="<<Tau[2][1]<<endl;
-					cout<<"Tau[2][2]="<<Tau[2][2]<<endl;
-					cout<<"Tau[2][3]="<<Tau[2][3]<<endl;
-					Float_t min3;
-					min3=Tau[2][0];
-					//----------Find min element of Tau-------------
-						for(Int_t m=0;m<4;m++){
-							if(Tau[2][m]<min3) min3=Tau[2][m];
-						}//End of for i(Int_t m=0;m<4;m++)
-					cout<<"min value[2]="<<min3<<endl;
-					TauSum[2] += min3;//Sum of min tau elements
-			 		cout<<"The sums of min values="<<TauSum[2]<<endl;
-				}//End of for(Int_t j=2;j<Jet_N;j++)
-				Jettiness[2]=TauSum[2]/QQ[2];
-				cout<<"Q^2["<<2<<"]="<<QQ[2]<<endl;
-				//myfile<<"Jettiness["<<2<<"]="<<Jettiness[2]<<endl;
-				cout<<"Jettiness[2]="<<Jettiness[2]<<endl;
-      	
-	   			Jetti2->Fill(Jettiness[2]);//Jet Number  
-			}//End of if(Jet_N>2)
-		}//End of else if(JetN>2)		
-      }//End of (ExtraLep_N==0)
+			for(Int_t jn=2;jn<Jet_N+1;jn++){
+				for(Int_t j=jn;j<Jet_N;j++){
+					Tau[jn][0]=v4_qa[jn]*v4_Jet[j];//v4_qa[1]->v4_qa[jn]:Jet_N=jn +total signal lepton
+					Tau[jn][1]=v4_qb[jn]*v4_Jet[j];//
+					cout<<"Tau["<<jn<<"][0]="<<Tau[jn][0]<<endl;
+					cout<<"Tau["<<jn<<"][1]="<<Tau[jn][1]<<endl;
+					for(Int_t k=0;k<jn;k++){
+					Tau[jn][k+2]=v4_Jet[k]*v4_Jet[j];
+					cout<<"Tau["<<jn<<"]["<<k+2<<"]="<<Tau[jn][k+2]<<endl;
+					}
+				Float_t min3;
+				min3=Tau[jn][0];
+				//----------Find min element of Tau-------------
+				for(Int_t m=0;m<jn+2;m++){
+					if(Tau[jn][m]<min3) min3=Tau[jn][m];
+				}//End of for i(Int_t m=0;m<jn+2;m++)
+				cout<<"min value["<<jn<<"]="<<min3<<endl;
+				TauSum[jn] += min3;//Sum of min tau elements
+			 	cout<<"The sums of min values["<<jn<<"]="<<TauSum[jn]<<endl;
+				}//End of for(Int_t j=jn;j<Jet_N;j++)
+			if(jn==Jet_N) TauSum[jn]=0.;
+			Jettiness[jn]=TauSum[jn]/QQ[jn];
+			cout<<"Q^2["<<jn<<"]="<<QQ[jn]<<endl;
+			//myfile<<"Jettiness["<<2<<"]="<<Jettiness[2]<<endl;
+			cout<<"Jettiness["<<jn<<"]="<<Jettiness[jn]<<endl;
+      			
+	   		//Jetti2->Fill(Jettiness[jn],);//FUNZIONA  
+			JetNJetti[Jet_N][jn]->Fill(Jettiness[jn]);//*** Break *** segmentation violatio
+			}//End of for(Int_r jn=2;jn<Jet_N+1;jn++)
+  			
+		}//End of if(Jet_N>2)
+	}//End of else if(JetN>=2)		
+    }//End of (ExtraLep_N==0)
 
 
 //-----------------(ExtraLep_N!=0) Calculation of Jettineis[0] to [2]----------------//
@@ -475,7 +531,8 @@ void jettiness()
 		cout<<"Q^2["<<0<<"]="<<QQ[0]<<endl;
 		//myfile<<"Jettiness["<<0<<"]="<<Jettiness[0]<<endl;
 		cout<<"Jettiness[0]="<<Jettiness[0]<<endl;
-      		//Jetti0->Fill(Jettiness[0]);//Jet Number  
+      		//Jetti0_Jet0->Fill(Jettiness[0],);//Jet Number  
+		JetNJetti[Jet_N][0]->Fill(Jettiness[0]);
 		}//End of if(Jet_N==0)
 		
 		else if(Jet_N==1){
@@ -515,12 +572,13 @@ void jettiness()
 			cout<<"Q^2["<<0<<"]="<<QQ[0]<<endl;
 			//myfile<<"Jettiness["<<0<<"]="<<Jettiness[0]<<endl;
 			cout<<"Jettiness[0]="<<Jettiness[0]<<endl;
-      			//Jetti0->Fill(Jettiness[0]);//Jet Number  
+      			//Jetti0_Jet1->Fill(Jettiness[0],);//Jet Number  
+			JetNJetti[Jet_N][0]->Fill(Jettiness[0]);
 			
 			//-------Jettiness[1]:v4_Jet is considered as signal and v4_ExtraLep[] as Pk-------
 			for(Int_t j=0;j<ExtraLep_N;j++){
-				Tau[1][0]=v4_qa[0]*v4_ExtraLep[j];
-				Tau[1][1]=v4_qb[0]*v4_ExtraLep[j];
+				Tau[1][0]=v4_qa[1]*v4_ExtraLep[j];
+				Tau[1][1]=v4_qb[1]*v4_ExtraLep[j];
 				Tau[1][2]=v4_Jet[0]*v4_ExtraLep[j];
 				cout<<"Tau[1][0]="<<Tau[1][0]<<endl;
 				cout<<"Tau[1][1]="<<Tau[1][1]<<endl;
@@ -531,7 +589,7 @@ void jettiness()
 					for(Int_t m=0;m<3;m++){
 					if(Tau[1][m]<min2) min2=Tau[1][m];
 					}//End of for i(Int_t m=0;m<N;m++)
-				cout<<"min value[0]="<<min2<<endl;
+				cout<<"min value[1]="<<min2<<endl;
 				TauSum[1] += min2;//Sum of min tau elements
 			 	cout<<"The sums of min values="<<TauSum[1]<<endl;
 			}//End of for (Int_t j=0;j<ExtraLep_N;j++)
@@ -539,7 +597,8 @@ void jettiness()
 			cout<<"Q^2["<<1<<"]="<<QQ[1]<<endl;
 			//myfile<<"Jettiness["<<1<<"]="<<Jettiness[1]<<endl;
 			cout<<"Jettiness[1]="<<Jettiness[1]<<endl;
-      		//	Jetti1->Fill(Jettiness[1]);//Jet Number  
+      			//Jetti1_Jet1->Fill(Jettiness[1],);//Jet Number  
+			JetNJetti[Jet_N][1]->Fill(Jettiness[1]);
 		}//End of else if(Jet_N==1)
 
 		else if(Jet_N>=2){
@@ -581,7 +640,8 @@ void jettiness()
 			//myfile<<"Jettiness["<<0<<"]="<<Jettiness[0]<<endl;
 			cout<<"Jettiness[0]="<<Jettiness[0]<<endl;
 			
-      			Jetti012->Fill(Jettiness[0]);//Jet Number 
+      			//Jetti0_Jet2->Fill(Jettiness[0],);//Jet Number 
+			JetNJetti[Jet_N][0]->Fill(Jettiness[0]);
 	 
 			//------------Jettiness[1]:One Jet as signal, lest jet as Pk----------
 			for(Int_t j=1;j<Jet_N;j++){
@@ -616,7 +676,7 @@ void jettiness()
 					for(Int_t m=0;m<3;m++){
 					if(Tau[1][m]<min4) min4=Tau[1][m];
 					}//End of for i(Int_t m=0;m<3;m++)
-				cout<<"min value[0]="<<min4<<endl;
+				cout<<"min value[1]="<<min4<<endl;
 				TauSum[1] += min4;//Sum of min tau elements
 			 	cout<<"The sums of min values="<<TauSum[1]<<endl;
 				}//End of for  (Int_t j=1;j<ExtraLep_N;j++)
@@ -625,13 +685,14 @@ void jettiness()
 			cout<<"Q^2["<<1<<"]="<<QQ[1]<<endl;
 			//myfile<<"Jettiness["<<1<<"]="<<Jettiness[1]<<endl;
 			cout<<"Jettiness[1]="<<Jettiness[1]<<endl;
-      			Jetti1->Fill(Jettiness[1]);//Jet Number  
+      			//Jetti1_Jet2->Fill(Jettiness[1],);//Jet Number  
+			JetNJetti[Jet_N][1]->Fill(Jettiness[1]);
 			
 			if(Jet_N==2){
 				//-------------Jettiness[2]-----------------
 				for(Int_t j=0;j<ExtraLep_N;j++){
-					Tau[2][0]=v4_qa[1]*v4_ExtraLep[j];
-					Tau[2][1]=v4_qb[1]*v4_ExtraLep[j];
+					Tau[2][0]=v4_qa[2]*v4_ExtraLep[j];
+					Tau[2][1]=v4_qb[2]*v4_ExtraLep[j];
 					Tau[2][2]=v4_Jet[0]*v4_ExtraLep[j];
 					Tau[2][3]=v4_Jet[1]*v4_ExtraLep[j];
 					cout<<"Tau[2][0]="<<Tau[2][0]<<endl;
@@ -653,108 +714,122 @@ void jettiness()
 				cout<<"Q^2["<<2<<"]="<<QQ[2]<<endl;
 				//myfile<<"Jettiness["<<2<<"]="<<Jettiness[2]<<endl;
 				cout<<"Jettiness[2]="<<Jettiness[2]<<endl;
-				}//Endo of(Jet_N==2)
+				//Jetti2_Jet2->Fill(Jettiness[2],);	
+				JetNJetti[Jet_N][2]->Fill(Jettiness[2]);
+			}//Endo of(Jet_N==2)
 			
 			if(Jet_N>2){
 				//---------Jettiness[2]:Two jets are considred as signals and others as Pk-----
-				for(Int_t j=2;j<Jet_N;j++){
-					Tau[2][0]=v4_qa[1]*v4_Jet[j];
-					Tau[2][1]=v4_qb[1]*v4_Jet[j];
-					Tau[2][2]=v4_Jet[0]*v4_Jet[j];
-					Tau[2][3]=v4_Jet[1]*v4_Jet[j];
-					cout<<"Tau[2][0]="<<Tau[2][0]<<endl;
-					cout<<"Tau[2][1]="<<Tau[2][1]<<endl;
-					cout<<"Tau[2][2]="<<Tau[2][2]<<endl;
-					cout<<"Tau[2][3]="<<Tau[2][3]<<endl;
+				for(Int_t jn=2;jn<Jet_N+1;jn++){
+					for(Int_t j=jn;j<Jet_N;j++){
+						Tau[jn][0]=v4_qa[jn]*v4_Jet[j];
+						Tau[jn][1]=v4_qb[jn]*v4_Jet[j];
+						cout<<"Tau["<<jn<<"][0]="<<Tau[jn][0]<<endl;
+						cout<<"Tau["<<jn<<"][1]="<<Tau[jn][1]<<endl;
+						for(Int_t k=0;k<jn;k++){
+							Tau[jn][k+2]=v4_Jet[k]*v4_Jet[j];
+							cout<<"Tau["<<jn<<"]["<<k+2<<"]="<<Tau[jn][k+2]<<endl;
+						}//End of for(Int_t j=jn;j<Jet_N;j++)
+	
 					Float_t min3;
-					min3=Tau[2][0];
+					min3=Tau[jn][0];
 					//----------Find min element of Tau-------------
-						for(Int_t m=0;m<4;m++){
-							if(Tau[2][m]<min3) min3=Tau[2][m];
-						}//End of for i(Int_t m=0;m<4;m++)
-					cout<<"min value[2]="<<min3<<endl;
-					TauSum[2] += min3;//Sum of min tau elements
-			 		cout<<"The sums of min values="<<TauSum[2]<<endl;
+					for(Int_t m=0;m<jn+2;m++){
+						if(Tau[jn][m]<min3) min3=Tau[jn][m];
+					}//End of for i(Int_t m=0;m<jn+2;m++)
+					cout<<"min value["<<jn<<"]="<<min3<<endl;
+					TauSum[jn] += min3;//Sum of min tau elements
+		 			if(jn==Jet_N) TauSum[jn]=0.;
+			 		cout<<"The sums of min values["<<jn<<"]="<<TauSum[jn]<<endl;
 				}//End of for(Int_t j=2;j<Jet_N;j++)
 					
 				//-------Jettiness[2]:Two jets are considered as signals and ExtraLep as Pk-----
-				for(Int_t j=0;j<ExtraLep_N;j++){
-					Tau[2][0]=v4_qa[1]*v4_ExtraLep[j];
-					Tau[2][1]=v4_qb[1]*v4_ExtraLep[j];
-					Tau[2][2]=v4_Jet[0]*v4_ExtraLep[j];
-					Tau[2][3]=v4_Jet[1]*v4_ExtraLep[j];
-					cout<<"Tau[2][0]="<<Tau[2][0]<<endl;
-					cout<<"Tau[2][1]="<<Tau[2][1]<<endl;
-					cout<<"Tau[2][2]="<<Tau[2][2]<<endl;
-					cout<<"Tau[2][3]="<<Tau[2][3]<<endl;
-					Float_t min3;
-					min3=Tau[2][0];
-					//----------Find min element of Tau-------------
-						for(Int_t m=0;m<4;m++){
-							if(Tau[2][m]<min3) min3=Tau[2][m];
-						}//End of for i(Int_t m=0;m<4;m++)
-					cout<<"min value[2]="<<min3<<endl;
-					TauSum[2] += min3;//Sum of min tau elements
-			 		cout<<"The sums of min values="<<TauSum[2]<<endl;
+				for(Int_t j=jn;j<ExtraLep_N;j++){
+					Tau[jn][0]=v4_qa[jn]*v4_ExtraLep[j];
+					Tau[jn][1]=v4_qb[jn]*v4_ExtraLep[j];
+					cout<<"Tau["<<jn<<"][0]="<<Tau[jn][0]<<endl;
+					cout<<"Tau["<<jn<<"][1]="<<Tau[jn][1]<<endl;
+					for(Int_t k=0;k<jn;k++){
+						Tau[jn][k+2]=v4_Jet[k]*v4_ExtraLep[j];
+						cout<<"Tau["<<jn<<"]["<<k+2<<"]="<<Tau[jn][k+2]<<endl;
+					}//End of for(Int_t k=0;k<jn;k++)
+
+				Float_t min3;
+				min3=Tau[jn][0];
+				//----------Find min element of Tau-------------
+					for(Int_t m=0;m<jn+2;m++){
+						if(Tau[jn][m]<min3) min3=Tau[jn][m];
+					}//End of for i(Int_t m=0;m<jn+2;m++)
+				cout<<"min value["<<jn<<"]="<<min3<<endl;
+				TauSum[jn] += min3;//Sum of min tau elements
+			 	cout<<"The sums of min values="<<TauSum[jn]<<endl;
 				}//End of for(Int_t j=0;j<Extra_N;j++)
 			
-			Jettiness[2]=TauSum[2]/QQ[2];
-			cout<<"Q^2["<<2<<"]="<<QQ[2]<<endl;
+			Jettiness[jn]=TauSum[jn]/QQ[jn];
+			cout<<"Q^2["<<jn<<"]="<<QQ[jn]<<endl;
 			//myfile<<"Jettiness["<<2<<"]="<<Jettiness[2]<<endl;
-			cout<<"Jettiness[2]="<<Jettiness[2]<<endl;
-      			Jetti2->Fill(Jettiness[2]);//Jet Number  
-			}//End of If(Jet_N>2)		
-		}//End of else if(Jet_N>=2)
-      }//End of (ExtraLep_N!==0)
+			cout<<"Jettiness["<<jn<<"]="<<Jettiness[jn]<<endl;
+      			JetNJetti[Jet_N][jn]->Fill(Jettiness[jn]);//Jet Number
+      			
+			}//End of for(jn=2;jn<JetN;jn++)  
+		}//End of If(Jet_N>2)		
+	}//End of else if(Jet_N>=2)
+     }//End of (ExtraLep_N!==0)
 
       //myfile<< entry<<"	"<<ExtraLep_N <<" "<<Jet_N <<"  "<<Jettiness[0] <<"		"<< Jettiness[1]<<"		"<< Jettiness[2]<<endl;
 
-    //  Double_t eventWeight = partialSampleWeight` * xsec * overallEventWeight ;
       //Int_t JetM_size=JetMass->size();
      //Int_t LepPt_size=LepPt->size();
 
-      	//Jetti0->Fill(Jettiness[0]);//Jet Number  
-      	//Jetti1->Fill(Jettiness[1]);//Jet Number  
-      	//Jetti2->Fill(Jettiness[2]);//Jet Number  
-      //JetN->Fill(Jet_N);//Jet Number  
-      //HiggsMass->Fill(ZZMass,eventWeight);
+      	//Jetti0->Fill(Jettiness[0],);//Jet Number  
+      	//Jetti1->Fill(Jettiness[1],);//Jet Number  
+      	//Jetti2->Fill(Jettiness[2],);//Jet Number  
+        JetN->Fill(Jet_N);//Jet Number 
+        WgtEW->Fill(eventWeight);
+	cout<<"xsec="<<xsec<<endl;
+	cout<<"overAllEventWeight="<<overallEventWeight<<end;   
+	for(Int_t j=0;j<Jet_N+1;j++){
+		Jetti[j]->Fill(Jettiness[j]);
+	}//for(Int_t j=0;j<Jet_N+1;j++)
+ 
+      //HiggsMass->Fill(ZZMass,);
       //for(UInt_t i=0;i<JetMass->size();i++){
-	//JetMass_H->Fill(JetMass->at(i),eventWeight); 
+	//JetMass_H->Fill(JetMass->at(i),); 
        //cout<<"JetM_size="<< JetM_size<<endl;
      //}//Endof for(UInt_t i=0;i<JetMass->size();i++
     } //end of Loop entry
     //myfile.close();
 
+    
+ // TFile *f= new TFile ("ggH3W_JettiN.root","CREATE");//W=weight, 1:eventWeight, 2:partialSampleWeight,3:gen_sumWeights
+  //TFile *f= new TFile ("ttHW_JettiN.root","CREATE");//W=weight, 1:eventWeight, 2:partialSampleWeight,3:gen_sumWeights
+   // TFile *f= new TFile("Weight.root","CREATE");
+  TCanvas *c1= new TCanvas();  
+  WgtEW->Draw();
+  WgtEW->SaveAs("eventWeight.png");
+  //JetN->Write();
+ // Jetti2->Write();
+  //Jetti1->Write();
+  //Jetti0->Write();
+  //Jetti2_Jet3->Write();
+  //Jetti2_Jet2->Write();
+  //Jetti1_Jet2->Write();
+  //Jetti0_Jet2->Write();
+  //Jetti1_Jet1->Write();
+  //Jetti0_Jet1->Write();
+  //Jetti0_Jet0->Write();
 
-  //TCanvas* canvas = new TCanvas();
- // canvas->Divide(3,1);
-  //canvas->cd();
-  //Jetti012->SetLineColor(2);
-  //Jetti1->SetLineColor(4);
-  //Jetti2->SetLineColor(1);
-  //Jetti012->Draw();
-  //Jetti0->Draw();
-  //TCanvas* c2 = new TCanvas();
-  //canvas->cd(2);
-  //Jetti1->Draw("same");
-  //TCanvas* c3 = new TCanvas();
- // canvas->cd(3);
-  //Jetti2->Draw("same");
-  //JetN->Draw();
-  //HiggsMass->Draw();
-   // JetMass_H->Draw();
-  //canvas->SaveAs("ggH_JetN.png");
-  //canvas->SaveAs("ggH_Jetti012_bis.png");
-  //canvas->SaveAs("ttH_Jetti012_bis.png");
-  //canvas->SaveAs("ggH_Jettiness2.png");
-  //canvas->SaveAs("ttH_Jettiness0.png");
-  //canvas->SaveAs("ttH_Jettiness012.png");
- // canvas->SaveAs("ttH_Jettiness012_bis.png");
-  //canvas->SaveAs("ggH_Jettiness012.png");
-  //canvas->SaveAs("ggH_Jettiness012_Bis.png");
+  for(Int_t j=0;j<maxJN;j++){
+	Jetti[j]->Write();
+  }//End of for(Int_t j=0;j<maxJN;j++)
 
+  for(Int_t j=0;j<maxJN;j++){
+	for(Int_t k=0;k<j+1;k++){
+		JetNJetti[j][k]->Write();
+        }//End of for(Int_t k=0;k<j+1;k++)
+  }//for(Int_t j=0;j<maxJN;j++)
+ 
+  //f->Write();
+  //f->Close();
 
-} //end histo function
-
-
-
+} //end histo funtion Void
