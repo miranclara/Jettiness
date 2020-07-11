@@ -35,14 +35,15 @@
 #include "TLorentzVector.h"
 #include "stdlib.h"
 
+
 //#include "/afs/cern.ch/user/m/mrkim/HZZ/CMSSW_10_2_18/src/ZZAnalysis/AnalysisStep/src/kFactors.C"//OK
 #include "../src/kFactors.C"//OK
 #include "/afs/cern.ch/user/m/mrkim/HZZ/CMSSW_10_2_18/src/ZZAnalysis/AnalysisStep/src/cConstants.cc" //NO
 //#include "../src/cConstants.cc" //NO
-//#include "/afs/cern.ch/user/m/mrkim/HZZ/CMSSW_10_2_18/src/ZZAnalysis/AnalysisStep/src/Discriminants.cc" //NO
-//#include "/afs/cern.ch/user/m/mrkim/HZZ/CMSSW_10_2_18/src/ZZAnalysis/AnalysisStep/src/Category.cc" //NO
-//#include "/afs/cern.ch/user/m/mrkim/HZZ/CMSSW_10_2_18/src/ZZAnalysis/AnalysisStep/src/bitops.cc" //OK
-//#include "/afs/cern.ch/user/m/mrkim/HZZ/CMSSW_10_2_18/src/ZZAnalysis/AnalysisStep/interface/FinalStates.h"  //OK
+#include "/afs/cern.ch/user/m/mrkim/HZZ/CMSSW_10_2_18/src/ZZAnalysis/AnalysisStep/src/Discriminants.cc" //NO
+#include "/afs/cern.ch/user/m/mrkim/HZZ/CMSSW_10_2_18/src/ZZAnalysis/AnalysisStep/src/Category.cc" //NO
+#include "/afs/cern.ch/user/m/mrkim/HZZ/CMSSW_10_2_18/src/ZZAnalysis/AnalysisStep/src/bitops.cc" //OK
+#include "/afs/cern.ch/user/m/mrkim/HZZ/CMSSW_10_2_18/src/ZZAnalysis/AnalysisStep/interface/FinalStates.h"  //OK
 
 using namespace std;
 
@@ -101,22 +102,30 @@ void jettiness()
 
 
 //---------- open input files------------------
+/* 
   int nDatasets=3;//2016,2017,2018
-/*
+  TString MCname="ggH_";// ##SHOULD BE CHANGED## MC Sample  Name = ggH_,ttH_,WH_,ZH_,TTtoL_,DY_
+  Float_t lumi[3]={35.9,41.5,59.7}; //2016,2017,2018 fb-1
   TString datasets[]={
         "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2016_CorrectBTag/ggH125/ZZ4lAnalysis.root",
         "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2017/ggH125/ZZ4lAnalysis.root",
         "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2018/ggH125/ZZ4lAnalysis.root",
         };//ggH MC Samples
 
-*/
+
+  int nDatasets=3;//2016,2017,2018
+  TString MCname="ttH_";// ##SHOULD BE CHANGED## MC Sample  Name = ggH_,ttH_,WH_,ZH_,TTtoL_,DY_
+  Float_t lumi[3]={35.9,41.5,59.7}; //2016,2017,2018 fb-1
   TString datasets[]={
         "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2016_CorrectBTag/ttH125/ZZ4lAnalysis.root",
         "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2017/ttH125/ZZ4lAnalysis.root",
         "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2018/ttH125/ZZ4lAnalysis.root",
         };//ttH MC Samples
 
-/*
+
+  int nDatasets=6;//2016,2017,2018
+  TString MCname="WH_";// ##SHOULD BE CHANGED## MC Sample  Name = ggH_,ttH_,WH_,ZH_,TTtoL_,DY_
+  Float_t lumi[6]={35.9,41.5,59.7,35.9,41.5,59.7}; //fb-1
   TString datasets[]={
         "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2016_CorrectBTag/WminusH125/ZZ4lAnalysis.root",
         "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2017/WminusH125/ZZ4lAnalysis.root",
@@ -126,12 +135,20 @@ void jettiness()
         "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2018/WplusH125/ZZ4lAnalysis.root",
   	};//WplusH125+WminusH125 MC Samples
 
+  
+  int nDatasets=3;//2016,2017,2018
+  TString MCname="ZH_";// ##SHOULD BE CHANGED## MC Sample  Name = ggH_,ttH_,WH_,ZH_,TTtoL_,DY_
+  Float_t lumi[3]={35.9,41.5,59.7}; //2016,2017,2018 fb-1
   TString datasets[]={
         "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2016_CorrectBTag/ZH125/ZZ4lAnalysis.root",
         "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2017/ZH125/ZZ4lAnalysis.root",
         "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2018/ZH125/ZZ4lAnalysis.root",
         };//ZH MC Samples
+*/
 
+  int nDatasets=6;//2016,2017,2018
+  TString MCname="TTtoL_BIS";// ##SHOULD BE CHANGED## MC Sample  Name = ggH_,ttH_,WH_,ZH_,TTtoL_,DY_
+  Float_t lumi[6]={35.9,41.5,59.7,35.9,41.5,59.7}; //fb-1
   TString datasets[]={
         "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2016_CorrectBTag/TTTo2L2Nu/ZZ4lAnalysis.root",
         "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2017/TTTo2L2Nu/ZZ4lAnalysis.root",
@@ -141,13 +158,15 @@ void jettiness()
         "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2018/WZTo3LNuext1/ZZ4lAnalysis.root",
         };//TTto2LNJ, WZto3LNuex1  MC Samples
 
-
+/*
+  int nDatasets=2;//2016,2017
+  TString MCname="DY_";// ##SHOULD BE CHANGED## MC Sample  Name = ggH_,ttH_,WH_,ZH_,TTtoL_,DY_
+  Float_t lumi[2]={35.9,41.5}; //fb-1
   TString datasets[]={
         "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2016_CorrectBTag/DYJetsToLL_M50_LO/ZZ4lAnalysis.root",
         "/eos/cms/store/group/phys_higgs/cmshzz4l/cjlst/RunIILegacy/200205_CutBased/MC_2017/DYJetsToLL_M50_LO/ZZ4lAnalysis.root",
         };//Drell-Yan MC Samples only 2016,2017
 */
-
 
 //---- Input file for multiple rootfiles-----------------
   TFile* inputFile[nDatasets];
@@ -158,8 +177,6 @@ void jettiness()
   Float_t partialSampleWeight[nDatasets];
   Double_t eventWeight[nDatasets]; 
   //Float_t lumi[2]={35.9,41.5}; //2016,2017,2018 fb-1
-  Float_t lumi[3]={35.9,41.5,59.7}; //2016,2017,2018 fb-1
-  //Float_t lumi[6]={35.9,41.5,59.7,35.9,41.5,59.7}; //fb-1
 
 //--------------------Definiton of 1D histogram--------------------- 
   TH1F* JetMass_H = new TH1F("JetMass_H","JetMass_H",100,0.,150.);
@@ -168,24 +185,29 @@ void jettiness()
   TH1F* wgtPSW= new TH1F("wgtPSW","partialSampleWeight",200.,-1,1);  
   TH1F* wgtGSW= new TH1F("wgtGSW","gen_sumWeights",10000.,0,100000);  
   TH1F* hxsec= new TH1F("hxsec","hxsec",200.,-1,1);  
+  TH1F* hKD= new TH1F("hKD","Kinematic Discriminant",200.,0,1.);  
   TH2F* J0_HiggsMassTau0 = new TH2F("J0_HiggsMassTau0","Higgs_Mass vs tau0",100,70.,300.,250,0.,5.); 
- // TH2F* J0_KinDSCTau0 = new TH2F("J0_KinDSCTau0","Kinematic D vs tau0",100,0.,1.250,0.,5.);
+  TH2F* J0_KinDSCTau0 = new TH2F("J0_KinDSCTau0","Kinematic D vs tau0",100,0.,1.,250,0.,5.);
   TH2F* J1_HiggsMassTau0 = new TH2F("J1_HiggsMassTau0","Higgs_Mass vs tau0",100,70.,300.,250,0.,5.);
- // TH2F* J1_KinDSCTau0 = new TH2F("J1_KinDSCTau0","Kinematic D vs tau0",100,0.,1.250,0.,5.);
+  TH2F* J1_KinDSCTau0 = new TH2F("J1_KinDSCTau0","Kinematic D vs tau0",100,0.,1.,250,0.,5.);
   TH2F* J2_HiggsMassTau0 = new TH2F("J2_HiggsMassTau0","Higgs_Mass vs tau0",100,70.,300.,250,0.,5.);
- // TH2F* J2_KinDSCTau0 = new TH2F("J2_KinDSCTau0","Kinematic D vs tau0",100,0.,1.250,0.,5.);
+  TH2F* J2_HiggsMassTau1 = new TH2F("J2_HiggsMassTau1","Higgs_Mass vs tau0",100,70.,300.,250,0.,5.);
+  TH2F* J2_HiggsMassTau2 = new TH2F("J2_HiggsMassTau2","Higgs_Mass vs tau0",100,70.,300.,250,0.,5.);
+  TH2F* J2_KinDSCTau0 = new TH2F("J2_KinDSCTau0","Kinematic D vs tau0",100,0.,1.,250,0.,5.);
+  TH2F* J2_KinDSCTau1 = new TH2F("J2_KinDSCTau1","Kinematic D vs tau0",100,0.,1.,250,0.,5.);
+  TH2F* J2_KinDSCTau2 = new TH2F("J2_KinDSCTau2","Kinematic D vs tau0",100,0.,1.,250,0.,5.);
   TH2F* J3_HiggsMassTau0 = new TH2F("J3_HiggsMassTau0","Higgs_Mass vs tau0",100,70.,300.,250,0.,5.);
-  //TH2F* J3_KinDSCTau0 = new TH2F("J3_KinDSCTau0","Kinematic D vs tau0",100,0.,1.250,0.,5.);
+  TH2F* J3_KinDSCTau0 = new TH2F("J3_KinDSCTau0","Kinematic D vs tau0",100,0.,1.,250,0.,5.);
   TH2F* J4_HiggsMassTau0 = new TH2F("J4_HiggsMassTau0","Higgs_Mass vs tau0",100,70.,300.,250,0.,5.);
- // TH2F* J4_KinDSCTau0 = new TH2F("J4_KinDSCTau0","Kinematic D vs tau0",100,0.,1.250,0.,5.);
-  TH1F* J1_tau0xtau1=new TH1F("J1_tau0xtau1","Jet=1",150,0,1.5);
-  TH1F* J2_tau0xtau1=new TH1F("J2_tau0xtau1","Jet=2",150,0,1.5);
-  TH1F* J3_tau0xtau1=new TH1F("J3_tau0xtau1","Jet=3",150,0,1.5);
-  TH1F* J4_tau0xtau1=new TH1F("J4_tau0xtau1","Jet=4",150,0,1.5);
-  TH1F* J1_tau0_tau1=new TH1F("J1_tau0_tau1","Jet=1",100,0,50);
-  TH1F* J2_tau0_tau1=new TH1F("J2_tau0_tau1","Jet=2",100,0,50);
-  TH1F* J3_tau0_tau1=new TH1F("J3_tau0_tau1","Jet=3",100,0,50);
-  TH1F* J4_tau0_tau1=new TH1F("J4_tau0_tau1","Jet=4",100,0,50);
+  TH2F* J4_KinDSCTau0 = new TH2F("J4_KinDSCTau0","Kinematic D vs tau0",100,0.,1.,250,0.,5.);
+  TH1F* J1_tau0xtau1=new TH1F("J1_tau0xtau1","Jet=1",100,0,1.5);//{150,0,1.5}
+  TH1F* J2_tau0xtau1=new TH1F("J2_tau0xtau1","Jet=2",100,0,1.5);
+  TH1F* J3_tau0xtau1=new TH1F("J3_tau0xtau1","Jet=3",100,0,1.5);
+  TH1F* J4_tau0xtau1=new TH1F("J4_tau0xtau1","Jet=4",100,0,1.5);
+  TH1F* J1_tau0_tau1=new TH1F("J1_tau0_tau1","Jet=1",50,0,50);//{100,0,50}
+  TH1F* J2_tau0_tau1=new TH1F("J2_tau0_tau1","Jet=2",50,0,50);
+  TH1F* J3_tau0_tau1=new TH1F("J3_tau0_tau1","Jet=3",50,0,50);
+  TH1F* J4_tau0_tau1=new TH1F("J4_tau0_tau1","Jet=4",50,0,50);
   TH2F* J1_tau0tau1x5=new TH2F("J1_tau0tau1x5","Jet=1",500,0,5.,100,0.,1.);
   TH2F* J1_tau0tau1=new TH2F("J1_tau0tau1","Jet=1",350,0,3.5,100,0.,1.);
   TH2F* J2_tau0tau1x5=new TH2F("J2_tau0tau1x5","Jet=2",500,0,5.,100,0.,1.);
@@ -212,7 +234,6 @@ void jettiness()
   TH2F* J4_tau3tau4=new TH2F("J4_tau3tau4","Jet=4",100,0,0.2,100,0.,0.02);
 
 //--------------------------1D histo definition-----------------------------------
- TString MCname="ttH_";// ##SHOULD BE CHANGED## MC Sample  Name = ggH_,ttH_,WH_,ZH_,TTtoL_,DY_
  TH1F* JetN = new TH1F("JetN",MCname+"_JetN",20,0.,20.);//Number of Jets
  Int_t maxJN=18;
  TString JN[18]={"JetN0","JetN1","JetN2","JetN3","JetN4","JetN5","JetN6","JetN7","JetN8","JetN9","JetN10","JetN11","JetN12","JetN13","JetN14","JetN15","JetN16","JetN17"};//Number of Jet
@@ -220,13 +241,13 @@ void jettiness()
  
   TH1F* tau[maxJN];
   for(Int_t k=0;k<maxJN;k++){
- 	tau[k]= new TH1F(MCname+Tau[k],MCname+Tau[k],250,0.,5.);//Number of Jets
+ 	tau[k]= new TH1F(MCname+Tau[k],MCname+Tau[k],100,0.,5.);//Number of Jets,{250,0.5}
   }
 
   TH1F* JetNtau[maxJN][maxJN];
   for(Int_t jn=0;jn<maxJN;jn++){
 	for(Int_t k=0;k<jn+1;k++){
-  	JetNtau[jn][k]= new TH1F(MCname+JN[jn]+"_"+Tau[k],MCname+JN[jn]+"_"+Tau[k],250,0.,5.);//Number of Jets
+  	JetNtau[jn][k]= new TH1F(MCname+JN[jn]+"_"+Tau[k],MCname+JN[jn]+"_"+Tau[k],100,0.,5.);//Number of Jets,{250,0,5}
   	}
   }
 
@@ -283,10 +304,10 @@ void jettiness()
   cout<<"v4_nb[2]="<<v4_nb.Pz()<<endl;
   cout<<"v4_nb[3]="<<v4_nb.E()<<endl;
 
- // Float_t KD = p_GG_SIG_ghg2_1_ghz1_1_JHUGen / ( p_GG_SIG_ghg2_1_ghz1_1_JHUGen + p_QQB_BKG_MCFM*getDbkgkinConstant(Z1Flav*Z2Flav,ZZMass) );
+  Float_t KD = p_GG_SIG_ghg2_1_ghz1_1_JHUGen / ( p_GG_SIG_ghg2_1_ghz1_1_JHUGen + p_QQB_BKG_MCFM*getDbkgkinConstant(Z1Flav*Z2Flav,ZZMass) );
   Int_t Lep_TotN;//Total Lepton Number of Final states
-  Int_t Lep_N;//
   Int_t ExtraLep_N;
+  Int_t Lep_N;
   //Int_t Photon_N;
   Int_t Jet_N;
   Float_t e_mass=0.00051;//GeV/c^2
@@ -299,7 +320,7 @@ void jettiness()
   //myfile<<"entry "<<"ExraLep_N "<<"Jet_N  "<<"Jettiness[0]	"<<"Jettiness[1]	"<<"Jettiness[2]	"<<endl;
    
    for (Long64_t entry= 0; entry < entries; entry++){
-  // for (Long64_t entry = 0; entry < 5; entry++) {   
+   //for (Long64_t entry = 0; entry < 5; entry++) {   
       
       
       inputTree[d]->GetEntry(entry);
@@ -307,11 +328,18 @@ void jettiness()
      
       //Double_t eventWeight[d]= partialSampleWeight[d]* xsec * overallEventWeight;
       eventWeight[d]= partialSampleWeight[d]* xsec * overallEventWeight;//[year depend]*[mode depend]*[each event dependent]
-      cout<<"xsec="<<xsec<<endl;
-      cout<<"overAllEventWeight="<<overallEventWeight<<endl;   
-      cout<<"partialSampleWeight="<<partialSampleWeight[d]<<endl;   
-      cout<<"gen_sumWeights="<<gen_sumWeights[d]<<endl;
-      cout<<"eventWeight="<<eventWeight[d]<<endl;   
+      //cout<<"xsec="<<xsec<<endl;
+      //cout<<"overAllEventWeight="<<overallEventWeight<<endl;   
+      //cout<<"partialSampleWeight="<<partialSampleWeight[d]<<endl;   
+      //cout<<"gen_sumWeights="<<gen_sumWeights[d]<<endl;
+      //cout<<"eventWeight="<<eventWeight[d]<<endl;   
+      //cout<<"p_GG_SIG_ghg2_1_ghz1_1_JHUGen="<<p_GG_SIG_ghg2_1_ghz1_1_JHUGen<<endl;   
+      //cout<<"p_QQB_BKG_MCFM="<<p_QQB_BKG_MCFM<<endl;   
+      //cout<<"getDbkgkinConstant(Z1Flav*Z2Flav,ZZMass)="<<getDbkgkinConstant(Z1Flav*Z2Flav,ZZMass)<<endl;   
+      //cout<<"Z1Flav="<<Z1Flav<<endl;   
+      //cout<<"Z2Flav="<<Z2Flav<<endl;   
+      //cout<<"ZZMass"<<ZZMass<<endl;   
+      cout<<"KD"<<KD<<endl;   
     //  myfile<<"------entry="<<entry<<"-----------"<<endl;
        	if(LepEta->size()!=4){
         cerr << "error in event " << nRun << ":" << nLumi << ":" << nEvent << "; stored leptons: "<< LepEta->size() << endl;
@@ -471,7 +499,7 @@ void jettiness()
 		//Jetti0_Jet0->Fill(Jettiness[0]);
 		JetNtau[Jet_N][0]->Fill(Jettiness[0],eventWeight[d]);
 		J0_HiggsMassTau0->Fill(ZZMass,Jettiness[0],eventWeight[d]);
-    		//J0_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
+    		J0_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
 		}//End of if(Jet_N==0)
 		
 		else if(Jet_N==1){
@@ -497,7 +525,7 @@ void jettiness()
 			//Jetti0_Jet1->Fill(Jettiness[0],);//Jet Number  
 			JetNtau[Jet_N][0]->Fill(Jettiness[0],eventWeight[d]);
 			J1_HiggsMassTau0->Fill(ZZMass,Jettiness[0],eventWeight[d]);
-    			//J1_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
+    			J1_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
 			//-----------Jettiness[1]-------------------
 			TauSum[1]=0;//Becaus no particles can be considered as Pk
 			Jettiness[1]=TauSum[1]/QQ[1];
@@ -572,7 +600,11 @@ void jettiness()
       				//Jetti2_Jet2->Fill(Jettiness[2],);//Jet Number
 				JetNtau[Jet_N][2]->Fill(Jettiness[2],eventWeight[d]);
 				J2_HiggsMassTau0->Fill(ZZMass,Jettiness[0],eventWeight[d]);
-    				//J2_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
+				J2_HiggsMassTau1->Fill(ZZMass,Jettiness[1],eventWeight[d]);
+				J2_HiggsMassTau2->Fill(ZZMass,Jettiness[2],eventWeight[d]);
+    				J2_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
+    				J2_KinDSCTau1->Fill(KD,Jettiness[1],eventWeight[d]);
+    				J2_KinDSCTau2->Fill(KD,Jettiness[2],eventWeight[d]);
 				J2_tau0xtau1->Fill(Jettiness[0]*Jettiness[1],eventWeight[d]);
 				J2_tau0_tau1->Fill(Jettiness[0]/Jettiness[1],eventWeight[d]);
                                 J2_tau0tau1x5->Fill(Jettiness[0],5*Jettiness[1],eventWeight[d]);
@@ -615,7 +647,7 @@ void jettiness()
 			if(Jet_N==3){
                         	
 				J3_HiggsMassTau0->Fill(ZZMass,Jettiness[0],eventWeight[d]);
-    				//J3_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
+    				J3_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
 				J3_tau0xtau1->Fill(Jettiness[0]*Jettiness[1],eventWeight[d]);
 				J3_tau0_tau1->Fill(Jettiness[0]/Jettiness[1],eventWeight[d]);
 				J3_tau0tau1x5->Fill(Jettiness[0],5*Jettiness[1],eventWeight[d]);
@@ -629,7 +661,7 @@ void jettiness()
 			if(Jet_N==4){
 				
 				J4_HiggsMassTau0->Fill(ZZMass,Jettiness[0],eventWeight[d]);
-    				//J4_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
+    				J4_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
 				J4_tau0xtau1->Fill(Jettiness[0]*Jettiness[1],eventWeight[d]);
 				J4_tau0_tau1->Fill(Jettiness[0]/Jettiness[1],eventWeight[d]);
                         	J4_tau0tau1x5->Fill(Jettiness[0],5*Jettiness[1],eventWeight[d]);
@@ -679,7 +711,7 @@ void jettiness()
       		//Jetti0_Jet0->Fill(Jettiness[0],);//Jet Number  
 		JetNtau[Jet_N][0]->Fill(Jettiness[0],eventWeight[d]);
 		J0_HiggsMassTau0->Fill(ZZMass,Jettiness[0],eventWeight[d]);
-    		//J0_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
+    		J0_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
 		}//End of if(Jet_N==0)
 		
 		else if(Jet_N==1){
@@ -722,7 +754,7 @@ void jettiness()
       			//Jetti0_Jet1->Fill(Jettiness[0],);//Jet Number  
 			JetNtau[Jet_N][0]->Fill(Jettiness[0],eventWeight[d]);
 			J1_HiggsMassTau0->Fill(ZZMass,Jettiness[0],eventWeight[d]);
-    			//J1_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
+    			J1_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
 			//-------Jettiness[1]:v4_Jet is considered as signal and v4_ExtraLep[] as Pk-------
 			for(Int_t j=0;j<ExtraLep_N;j++){
 				Tau[1][0]=v4_qa[1]*v4_ExtraLep[j];
@@ -870,7 +902,11 @@ void jettiness()
 				//Jetti2_Jet2->Fill(Jettiness[2],);	
 				JetNtau[Jet_N][2]->Fill(Jettiness[2],eventWeight[d]);
 				J2_HiggsMassTau0->Fill(ZZMass,Jettiness[0],eventWeight[d]);
-    				//J2_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
+				J2_HiggsMassTau1->Fill(ZZMass,Jettiness[1],eventWeight[d]);
+				J2_HiggsMassTau2->Fill(ZZMass,Jettiness[2],eventWeight[d]);
+    				J2_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
+    				J2_KinDSCTau1->Fill(KD,Jettiness[1],eventWeight[d]);
+    				J2_KinDSCTau2->Fill(KD,Jettiness[2],eventWeight[d]);
 				J2_tau0xtau1->Fill(Jettiness[0]*Jettiness[1],eventWeight[d]);
 				J2_tau0_tau1->Fill(Jettiness[0]/Jettiness[1],eventWeight[d]);
                                 J2_tau0tau1x5->Fill(Jettiness[0],5*Jettiness[1],eventWeight[d]);
@@ -935,7 +971,7 @@ void jettiness()
 			if(Jet_N==3){
 				
 				J3_HiggsMassTau0->Fill(ZZMass,Jettiness[0],eventWeight[d]);
-    				//J3_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
+    				J3_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
 				J3_tau0xtau1->Fill(Jettiness[0]*Jettiness[1],eventWeight[d]);
 				J3_tau0_tau1->Fill(Jettiness[0]/Jettiness[1],eventWeight[d]);
                         	J3_tau0tau1x5->Fill(Jettiness[0],5*Jettiness[1],eventWeight[d]);
@@ -949,7 +985,7 @@ void jettiness()
 			if(Jet_N==4){
 		
 				J4_HiggsMassTau0->Fill(ZZMass,Jettiness[0],eventWeight[d]);
-    				//J4_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
+    				J4_KinDSCTau0->Fill(KD,Jettiness[0],eventWeight[d]);
 				J4_tau0xtau1->Fill(Jettiness[0]*Jettiness[1],eventWeight[d]);
 				J4_tau0_tau1->Fill(Jettiness[0]/Jettiness[1],eventWeight[d]);
                         	J4_tau0tau1x5->Fill(Jettiness[0],5*Jettiness[1],eventWeight[d]);
@@ -985,7 +1021,7 @@ void jettiness()
         wgtPSW->Fill(partialSampleWeight[d]);
         wgtGSW->Fill(gen_sumWeights[d]);
         hxsec->Fill(xsec);
-   
+        hKD->Fill(KD,eventWeight[d]);
 	for(Int_t j=0;j<Jet_N+1;j++){
 		tau[j]->Fill(Jettiness[j],eventWeight[d]);
 	}//for(Int_t j=0;j<Jet_N+1;j++)
@@ -999,7 +1035,7 @@ void jettiness()
   }//end of Loop for(int d=0;d<nDatasets;d++)
     //myfile.close();
 
-/*  
+ 
  // TFile *f= new TFile ("ggH3W_JettiN.root","CREATE");//W=weight, 1:eventWeight, 2:partialSampleWeight,3:gen_sumWeights
   TFile *f= new TFile (MCname+"JettiN_201678.root","CREATE");//W=weight, 1:eventWeight, 2:partialSampleWeight,3:gen_sumWeights
 //  TFile *f= new TFile("Weight.root","CREATE"); 
@@ -1009,18 +1045,21 @@ void jettiness()
  wgtGSW->Write();
  wgtOAEW->Write();
  hxsec->Write();
-
- 
+ hKD->Write(); 
  J0_HiggsMassTau0->Write();
- //J0_KinDSCTau0->Write();
+ J0_KinDSCTau0->Write();
  J1_HiggsMassTau0->Write();
- //J1_KinDSCTau0->Write();
+ J1_KinDSCTau0->Write();
  J2_HiggsMassTau0->Write();
- //J2_KinDSCTau0->Write();
+ J2_HiggsMassTau1->Write();
+ J2_HiggsMassTau2->Write();
+ J2_KinDSCTau0->Write();
+ J2_KinDSCTau1->Write();
+ J2_KinDSCTau2->Write();
  J3_HiggsMassTau0->Write();
- //J3_KinDSCTau0->Write();
+ J3_KinDSCTau0->Write();
  J4_HiggsMassTau0->Write();
- //J4_KinDSCTau0->Write();
+ J4_KinDSCTau0->Write();
  J1_tau0xtau1->Write();
  J1_tau0_tau1->Write();
  J2_tau0xtau1->Write();
@@ -1055,22 +1094,6 @@ void jettiness()
  J4_tau3tau4->Write();
 
 
-  TCanvas *c1= new TCanvas();  
-  wgtEW->Draw();
-  c1->SaveAs("ttHFig/eventWeight.png");
-  TCanvas *c2= new TCanvas();  
-  wgtPSW->Draw();
-  c2->SaveAs("ttHFig/partialsampleweight.png");
-  TCanvas *c3= new TCanvas();  
-  wgtGSW->Draw();
-  c3->SaveAs("ttHFig/gensumweight.png");
-  TCanvas *c4= new TCanvas();  
-  wgtOAEW->Draw();
-  c4->SaveAs("ttHFig/OAEWeight.png");
-  TCanvas *c5= new TCanvas();  
-  hxsec->Draw(); c5->SaveAs(NXYZE3Vbis.C
-"ttHFig/xsec.png");
-
 //----JettiN-------------------------------
   for(Int_t j=0;j<maxJN;j++){
 	tau[j]->Write();
@@ -1085,6 +1108,5 @@ void jettiness()
 
   f->Write();
   f->Close();
-*/
 
 } //end histo funtion Void
