@@ -2,7 +2,6 @@
 //* Jettiness macro calculated with coordinate PxPyPzE
 //* For JettinessN + Multiple MC samples+ Mc weight+2D tau plot+(2DH range chage)
 //* MC samples:ggH,ttH,W(+,_)H, ZH, ttbar(TTTo2LNU, WZto3LNuex1), Drell-Yan
-//* Higss mass, Kinematic Discriminate are investicated with tau
 //* Author:Mi Ran Kim
 //* Sungkyunkwan University.South Korea
 //* 9th.June.2020
