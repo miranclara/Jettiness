@@ -70,8 +70,14 @@
 
 #include <MelaAnalytics/CandidateLOCaster/interface/MELACandidateRecaster.h>
 #include <CommonLHETools/LHEHandler/interface/LHEHandler.h>
+#include <ZZAnalysis/AnalysisStep/interface/utils.h>//clara
 
 #include "ZZ4lConfigHelper.h"
+//#include "./ZZ4lConfigHelper.h"
+//#include <./ZZ4lConfigHelper.h>
+//#include "/afs/cern.ch/user/m/mrkim/work/HZZ/201211/CMSSW_10_2_18/src/ZZAnalysis/AnalysisStep/test/Ntuplizers/ZZ4lConfigHelper.h"
+//#include </afs/cern.ch/user/m/mrkim/work/HZZ/201211/CMSSW_10_2_18/src/ZZAnalysis/AnalysisStep/test/Ntuplizers/ZZ4lConfigHelper.h>
+//#include <ZZAnalysis/AnalysisStep/test/Ntuplizers/ZZ4lConfigHelper.h>
 #include "HZZ4lNtupleFactory.h"
 
 #include <TRandom3.h>
@@ -80,11 +86,11 @@
 #include "TSpline.h"
 #include "TGraphErrors.h"
 
-#include <string>
-#include <iostream>//clara
-//#include <fstream>//clara
-//using namespace std;//clara
+
+using namespace zzanalysis;//clara
+
 namespace {
+  
   bool writeJets = true;     // Write jets in the tree. FIXME: make this configurable
   bool writePhotons = true; // Write photons in the tree. FIXME: make this configurable
   bool addKinRefit = true;
@@ -180,36 +186,20 @@ namespace {
   Short_t evtPassMETTrigger = 0;
 
   using namespace std;//Clara
-  //DEFINITION FOR JETTINESS
+  
+ //DEFINITION FOR JETTINESS
   TLorentzVector v4_na(0.0,0.0,1.0,1.0);//xyzE, clara
   TLorentzVector v4_nb(0.0,0.0,-1.0,1.0);//xy-zE, clara
- // cout<<"v4_na[0]="<<v4_na.Px()<<endl;
- // cout<<"v4_na[1]="<<v4_na.Py()<<endl;
- // cout<<"v4_na[2]="<<v4_na.Pz()<<endl;
- // cout<<"v4_na[3]="<<v4_na.E()<<endl;
- // cout<<"v4_nb[0]="<<v4_nb.Px()<<endl;
- // cout<<"v4_nb[1]="<<v4_nb.Py()<<endl;
- // cout<<"v4_nb[2]="<<v4_nb.Pz()<<endl;
- // cout<<"v4_nb[3]="<<v4_nb.E()<<endl;
+  Int_t j=0;//clara, Glover counter v4_PEPM; 
 
-
-
-  //TLorentzVector v4_ZZCand[5];//clara     
-  vector<math::XYZTLorentzVector> v4_ZZCand;//clara     
-  vector<math::XYZTLorentzVector> v4_Lep;//clara     
-  vector<math::XYZTLorentzVector> v4_Jet;//clara     
-  vector<math::XYZTLorentzVector> v4_ExtraLep;//clara     
- // vector<math::XYZTLorentzVector> v4_qa;//Beam=Scala product of v4_(ZZandi+Jet+ExtraLep) and v4_na, clara   
-  //vector<math::XYZTLorentzVector> v4_qb;////Beam=Scala product of v4_(ZZandi+Jet+ExtraLep) and v4_na, clara      
- // std::vector<float> qa;//Beam, clara
- // std::vector<float> qb;//Beam, clara
- // std::vector<float> QQ;//Qa*Qb, clara
-  std::vector<float> Jettiness;//For trial, clara
-  std::vector<float> Prova1;//For trial, clara
-  std::vector<float> Prova2;//For trial, clara
+  std::vector<float> Jettiness;//clara
   std::vector<float> LepPt;
   std::vector<float> LepEta;
   std::vector<float> LepPhi;
+  std::vector<float> LepPx;//clara
+  std::vector<float> LepPy;//clara
+  std::vector<float> LepPz;//clara
+  std::vector<float> LepE;//clara
   std::vector<float> LepSCEta;
   std::vector<short> LepLepId;
   std::vector<float> LepSIP;
@@ -242,7 +232,14 @@ namespace {
   std::vector<float> LepSigma_Rho_Dn;
   std::vector<float> LepSigma_Phi_Up;
   std::vector<float> LepSigma_Phi_Dn;
-
+ 
+  std::vector<float> tau0;
+  std::vector<float> tau1;
+  std::vector<float> tau2;
+  std::vector<float> tau3;
+  std::vector<float> tau4;
+  std::vector<float> mintau;
+  std::vector<float> tausum;
 
   std::vector<float> fsrPt;
   std::vector<float> fsrEta;
@@ -294,6 +291,10 @@ namespace {
   std::vector<float> ExtraLepPt;
   std::vector<float> ExtraLepEta;
   std::vector<float> ExtraLepPhi ;
+  std::vector<float> ExtraLepPx;//clara
+  std::vector<float> ExtraLepPy;//clara
+  std::vector<float> ExtraLepPz;//clara
+  std::vector<float> ExtraLepE;//clara
   std::vector<short> ExtraLepLepId;
   
   // Photon info
@@ -424,7 +425,7 @@ namespace {
     return id;
   }
 
-}
+}//End of namespace
 
 using namespace std;
 using namespace edm;
@@ -603,7 +604,7 @@ private:
   TGraphErrors *gr_NNLOPSratio_pt_powheg_3jet;
 
   bool printedLHEweightwarning;
-};
+};//End of class HZZ4lNtupleMaker
 
 //
 // constructors and destructor
@@ -787,7 +788,7 @@ HZZ4lNtupleMaker::HZZ4lNtupleMaker(const edm::ParameterSet& pset) :
     FileZXWeightEle->Close();
     FileZXWeightMuo->Close();
   }
-}
+}//End of No name parentheis
 
 HZZ4lNtupleMaker::~HZZ4lNtupleMaker()
 {
@@ -980,7 +981,7 @@ void HZZ4lNtupleMaker::analyze(const edm::Event& event, const edm::EventSetup& e
       addweight(gen_sumWeights, PUWeight*genHEPMCweight);
 
       mch.genAcceptance(gen_ZZ4lInEtaAcceptance, gen_ZZ4lInEtaPtAcceptance);
-    }
+    }//End of 
 
     addweight(Nevt_Gen_lumiBlock, 1); // Needs to be outside the if-block
 
@@ -1010,7 +1011,8 @@ void HZZ4lNtupleMaker::analyze(const edm::Event& event, const edm::EventSetup& e
     }
 
 // End of MC history analysis ------------------------------------------
-  } else {
+  }//End of if(isMC) 
+  else {
     ++Nevt_Gen_lumiBlock; // keep track of # events for data as well
   }
 
@@ -1147,7 +1149,7 @@ void HZZ4lNtupleMaker::analyze(const edm::Event& event, const edm::EventSetup& e
       e << "Either no met.genMET or metCorrHandler!";
       throw e;
     }
-  }
+  }//End of if (metHandle.isValid())
   else{
     metobj.extras.met = metobj.extras.met_original = metobj.extras.met_raw
       = metobj.extras.met_METup = metobj.extras.met_METdn
@@ -1174,7 +1176,7 @@ void HZZ4lNtupleMaker::analyze(const edm::Event& event, const edm::EventSetup& e
       = metobj_corrected.extras.phi_PUup = metobj_corrected.extras.phi_PUdn
 
       = -99;
-  }
+  }//End of else
   //Handle<pat::METCollection> metNoHFHandle;
   //event.getByToken(metNoHFToken, metNoHFHandle);
   //if(metNoHFHandle.isValid()){
@@ -1245,7 +1247,7 @@ void HZZ4lNtupleMaker::analyze(const edm::Event& event, const edm::EventSetup& e
 	  qcd_ggF_uncertSF = std::vector<float>(qcd_ggF_uncertSF_tmp.begin(),qcd_ggF_uncertSF_tmp.end());
 
 
-  }
+  }//End of if(isMC && apply_QCD_GGF_UNCERT) 
    
   //Loop on the candidates
   vector<Int_t> CRFLAG(cands->size());
@@ -1277,7 +1279,7 @@ void HZZ4lNtupleMaker::analyze(const edm::Event& event, const edm::EventSetup& e
         }
       }
     }
-  }
+  }//End of for( edm::View<pat::CompositeCandidate>::const_iterator cand = cands->begin(); cand != cands->end(); ++cand) 
 
   //v4_Jet.clear();//Clara
   // Count and store jets, after additional cleaning for CRs...
@@ -1325,7 +1327,7 @@ void HZZ4lNtupleMaker::analyze(const edm::Event& event, const edm::EventSetup& e
     }
      
     if (writeJets) FillJet(*(cleanedJets.at(i))); // No additional pT cut (for JEC studies)
-  }
+  }//End of for (unsigned i=0; i<cleanedJets.size(); ++i)
 
   // Now we can write the variables for candidates
   int nFilled=0;
@@ -1355,18 +1357,16 @@ void HZZ4lNtupleMaker::analyze(const edm::Event& event, const edm::EventSetup& e
     else
       myTree->FillCurrentTree(false); //puts it in the failed tree if there is one
   }
-}
+}//End of void HZZ4lNtupleMaker::analyze
 
 
 void HZZ4lNtupleMaker::FillJet(const pat::Jet& jet)
 {
-   v4_Jet.clear();
-   v4_Jet.push_back(jet.p4());//clara
-   //v4_Jet.push_back(jet.p4().x(),jet.p4().y(),jet.p4().z(),jet.p4().M());//clara,NOTWORKING
    JetPt  .push_back( jet.pt());
    JetEta .push_back( jet.eta());
    JetPhi .push_back( jet.phi());
    JetMass .push_back( jet.p4().M());
+   
    JetBTagger .push_back( jet.userFloat("bTagger"));
    JetIsBtagged .push_back( jet.userFloat("isBtagged"));
    JetIsBtaggedWithSF .push_back( jet.userFloat("isBtaggedWithSF"));
@@ -1401,7 +1401,7 @@ void HZZ4lNtupleMaker::FillJet(const pat::Jet& jet)
 
    JetHadronFlavour .push_back(jet.hadronFlavour());
    JetPartonFlavour .push_back(jet.partonFlavour());
-}
+}//End of void HZZ4lNtupleMaker::FillJet(const pat::Jet& jet)
 
 void HZZ4lNtupleMaker::FillPhoton(int year, const pat::Photon& photon)
 {
@@ -1428,7 +1428,7 @@ float HZZ4lNtupleMaker::EvalSpline(TSpline3* const& sp, float xval){
   }
   else res=sp->Eval(xval);
   return res;
-}
+}//End of float HZZ4lNtupleMaker::EvalSpline()
 
 void HZZ4lNtupleMaker::FillKFactors(edm::Handle<GenEventInfoProduct>& genInfo, std::vector<const reco::Candidate *>& genZLeps){
   KFactor_QCD_ggZZ_Nominal=1;
@@ -1524,7 +1524,7 @@ void HZZ4lNtupleMaker::FillKFactors(edm::Handle<GenEventInfoProduct>& genInfo, s
     }
   }
 
-}
+}//End of void HZZ4lNtupleMaker::FillKFactors(edm::Handle<GenEventInfoProduct>& genInfo, std::vector<const reco::Candidate *>& genZLeps){
 
 
 void HZZ4lNtupleMaker::FillLHECandidate(){
@@ -1664,7 +1664,7 @@ void HZZ4lNtupleMaker::FillLHECandidate(){
   LHEweight_PDFVariation_Dn = lheHandler->getLHEWeight_PDFVariationUpDn(-1, 1.);
   LHEweight_AsMZ_Up = lheHandler->getLHEWeigh_AsMZUpDn(1, 1.);
   LHEweight_AsMZ_Dn = lheHandler->getLHEWeigh_AsMZUpDn(-1, 1.);
-}
+}//End of void HZZ4lNtupleMaker::FillLHECandidate()
 
 
 void HZZ4lNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool evtPass, const edm::Event& event, Int_t CRFLAG)
@@ -1673,16 +1673,17 @@ void HZZ4lNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool e
   //myTree->createNewCandidate(); // this doesn't do anything anymore
 
   //Reinitialize the per-candidate vectors (necessary because in CRs we can store more than 1 candidate per event)
-  v4_ZZCand.clear();//Clara
-  v4_Lep.clear();//Clara
-  v4_ExtraLep.clear();//Clara
-  //v4_Jet.clear();//Clara
-  Jettiness.clear();//Jettiness try
-  Prova1.clear();
-  Prova2.clear();
+  Jettiness.clear();//clara
+  
   LepPt.clear();
   LepEta.clear();
   LepPhi.clear();
+
+  LepPx.clear();//clara
+  LepPy.clear();//clara
+  LepPz.clear();//clara
+  LepE.clear();//clara
+  
   LepSCEta.clear();
   LepLepId.clear();
   LepSIP.clear();
@@ -1698,7 +1699,6 @@ void HZZ4lNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool e
   LepPhotonIso.clear();
   LepPUIsoComponent.clear();
   LepCombRelIsoPF.clear();
-
   LepSF.clear();
   LepSF_Unc.clear();
 	
@@ -1728,6 +1728,10 @@ void HZZ4lNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool e
   ExtraLepPt.clear();
   ExtraLepEta.clear();
   ExtraLepPhi.clear();
+  ExtraLepPx.clear();//clara
+  ExtraLepPy.clear();//clara
+  ExtraLepPz.clear();//clara
+  ExtraLepE.clear();//clara
   ExtraLepLepId.clear();
 
   CRflag = CRFLAG;
@@ -1739,19 +1743,9 @@ void HZZ4lNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool e
     ZZMassErrCorr = cand.userFloat("massErrorCorr");
     ZZMassPreFSR = cand.userFloat("m4l");
 
-    //===JETTINESS======//
-    //Jettiness.assign(5,0.2);//OK
-    //Jettiness.at(0)=1.2;//FAILED EXPRESSION
-    //Jettiness.push_back(1.2);
-    //Jettiness.push_back(0.5);
-    //Jettiness.push_back(0.1);
-  
-    v4_ZZCand.push_back(cand.p4());//clara
-
     ZZPt  = cand.p4().pt();
     ZZEta = cand.p4().eta();
     ZZPhi = cand.p4().phi();
-    
     ZZjjPt = cand.userFloat("ZZjjPt");
      
     if(addKinRefit){
@@ -1860,11 +1854,6 @@ void HZZ4lNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool e
   vector<float> combRelIsoPF(4);
   passIsoPreFSR = true;
   
-  /*
-  for (unsigned int i=0; i<jet.size(); ++i){//Clara
-    v4_Jet.push_back(jet[i]->p4());//clara
-  }//End of for (unsigned int i=0; i<jet.size(); ++i)//Clara
-*/
 
   for (unsigned int i=0; i<leptons.size(); ++i){
     float curr_dR = 999;
@@ -1887,11 +1876,15 @@ void HZZ4lNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool e
     }
 
     //Fill the info on the lepton candidates
-    v4_Lep.push_back(leptons[i]->p4());//clara
-    //Prova1.push_back(leptons[i]->mass());//clara prova
+    
     LepPt .push_back( leptons[i]->pt() );
     LepEta.push_back( leptons[i]->eta() );
     LepPhi.push_back( leptons[i]->phi() );
+    LepPx.push_back( leptons[i]->px() );//clara
+    LepPy.push_back( leptons[i]->py() );//clara
+    LepPz.push_back( leptons[i]->pz() );//clara
+    LepE.push_back( leptons[i]->p4().E());//clara
+    
     LepSCEta.push_back( lepFlav==11 ? userdatahelpers::getUserFloat(leptons[i],"SCeta") : -99. );
     int id =  leptons[i]->pdgId();
     if(id == 22 && (i == 1 || i == 3)) id=-22; //FIXME this assumes a standard ordering of leptons.
@@ -1925,7 +1918,7 @@ void HZZ4lNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool e
     LepCombRelIsoPF.push_back( combRelIsoPF[i] );
     LepisLoose.push_back(userdatahelpers::hasUserFloat(leptons[i],"isLoose") == 1 ? userdatahelpers::getUserFloat(leptons[i],"isLoose") : -2);
 
-  }
+  }//End of for (unsigned int i=0; i<leptons.size(); ++i) 
 
   // FSR
   for (unsigned i=0; i<fsrPhot.size(); ++i) {
@@ -1975,21 +1968,20 @@ void HZZ4lNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool e
         //for(int iextra=0;iextra<4;iextra++)varExtra[iextra].Prepend(extraString.Data());
         reco::CandidatePtr candPtr=cand.userCand(extraString.Data());
 
-        v4_ExtraLep.push_back(candPtr->p4());//clara
-
         ExtraLepPt.push_back(candPtr->pt());
         ExtraLepEta.push_back(candPtr->eta());
         ExtraLepPhi.push_back(candPtr->phi());
-        ExtraLepLepId.push_back(candPtr->pdgId());
-       // Prova1.push_back(candPtr->mass());//Clara, Working
-      }
+        ExtraLepPx.push_back(candPtr->px());//clara
+        ExtraLepPy.push_back(candPtr->py());//clara
+        ExtraLepPz.push_back(candPtr->pz());//clara
+        ExtraLepE.push_back(candPtr->p4().E());//clara
+        }
     }
-
   }
 
-  //Compute the data/MC weight
-  dataMCWeight = 1.;
-  //When the trigger is not applied in the MC, apply a trigger efficiency factor instead (FIXME: here hardcoding the efficiencies computed for ICHEP2016)
+   //Compute the data/MC weight
+   dataMCWeight = 1.;
+ //When the trigger is not applied in the MC, apply a trigger efficiency factor instead (FIXME: here hardcoding the efficiencies computed for ICHEP2016)
   trigEffWeight = 1.;
   if(isMC) {
     
@@ -2018,131 +2010,136 @@ void HZZ4lNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool e
   cout<<" trigger eff. weight =   "<<trigEffWeight<<endl;
   cout<<"product of all =         "<<overallEventWeight/fabs(genHEPMCweight)<<endl;
   cout<<endl;
+ */ 
   
-  */
   
-//=====Jettiness Algorithem====
+// ******************************************
+// *       <Jettiness Algorithem>           *
+// *  Author: KIM Mi Ran                    *
+// *  Sunkyunkwan University,South Korea    *
+// *  26th,March,2021                       *
+// ******************************************
   Int_t nJet=JetPt.size();
-  //Int_t nJet=v4_Jet.size();
- // Int_t nJetBis=JetPt.size();
-  Int_t nLep=v4_Lep.size();
-  Int_t nCand=v4_ZZCand.size();
-  Int_t nExtraLep=v4_ExtraLep.size();
-  
- // Prova1.push_back(nJet);//Clara
- // Prova2.push_back(nJetBis);//Clara
-
-  TLorentzVector v4ZZCand[nCand];
+  Int_t nLep=LepPx.size();
+  Int_t nExtraLep=ExtraLepPx.size();
+  Float_t e_mass=0.00051;//GeV/c^2
+  Float_t mu_mass=0.10566;//GeV/c^2
+ 
   TLorentzVector v4ExtraLep[nExtraLep];
   TLorentzVector v4Lep[nLep];
-  //TLorentzVector v4JetPEPM[nJet];
   TLorentzVector v4Jet[nJet];
-  TLorentzVector  v4_allJetSum[nJet+1];//Clara     
+  TLorentzVector v4_allJetSum[nJet+1];    
   
-  TLorentzVector  v4_allLepSum;//Clara
-  TLorentzVector  v4_allLepSum1;//Clara     
-  TLorentzVector  v4_allLepSum2;//Clara     
-  TLorentzVector  v4_allLepJetSum[nJet+1];//Clara     
+  TLorentzVector  v4_ExtraLepAdd;
+  TLorentzVector  v4_LepAddTot;
+  TLorentzVector  v4_allLepSum;
+  TLorentzVector  v4_allLepJetSum[nJet+1];    
+ 
   //Initialization
-  v4_allLepSum1.SetPxPyPzE(0,0,0,0);//Clara     
-  v4_allLepSum2.SetPxPyPzE(0,0,0,0);//Clara     
+  v4_allLepSum.SetPxPyPzE(0,0,0,0);    
   for(Int_t i=0;i<nJet+1;i++){
-  v4_allJetSum[i].SetPxPyPzE(0,0,0,0);//Clara     
-  v4_allLepJetSum[i].SetPxPyPzE(0,0,0,0);//Clara     
+  v4_allJetSum[i].SetPxPyPzE(0,0,0,0);     
+  v4_allLepJetSum[i].SetPxPyPzE(0,0,0,0);     
   }
   
- for(Int_t i=0;i<nLep;i++){
-    //Prova2.push_back(v4_Lep.at(i).Pt());//Clara
-   // Prova1.push_back(leptons[i]->pt());//Clara
-    //Prova2.push_back(v4_Lep.at(i).M());//Clara
-    //Prova1.push_back(leptons[i]->mass());//Clara
-   // Prova2.push_back(v4_Jet.at(i).Pt());//Clara
-   // Prova1.push_back(jet.pt());//Clara:class std::vector<const reco::Candidate*>' has no member named 'pt'
-   //Prova1.push_back(nCand);//Clara
-  // Prova1.push_back(cand.p4().mass());//Clara:NOT WORKING
-  // Prova2.push_back(v4_ZZCand.at(i).M());//Clara
-   //Prova1.push_back(nExtraLep);//Clara
-   //Prova1.push_back(candPtr->mass());//Clara:'candPtr' was not declared in this scope
-   //Prova2.push_back(v4_ExtraLep.at(i).M());//Clara
-  // Prova1.push_back(nJet);//Clara
-  // Prova2.push_back(v4_Jet.at(i).M());//Clara
-  }
-
-
   //----Beam defintion----//
-  Int_t N=2+nJet;//Number of Tau elimenmts
   Float_t Tau[nJet+1][nJet+2];//Tau elements array
   Float_t TauSum[nJet+1];//min valus Sum of Tau elements
   TLorentzVector v4_qa[nJet+1];//Beam=Scalar products v4 sum of jet+lepton and the direction v4_na:Z
   TLorentzVector v4_qb[nJet+1];//Beam=Scalra products v4 sum of jet+lepton and the direction v4_nb:-Z
   Float_t QQ[nJet+1];//Energy Normalization Factor
- // Float_t Jettiness[nJet+1];//Jettiness=TauSum[i]/QQ[i]
 
+/*
  //--v4ExtraLepton---//
   for(Int_t i=0;i<nExtraLep;i++){
-      v4ExtraLep[i].SetPxPyPzE(v4_ExtraLep.at(i).Px(),v4_ExtraLep.at(i).Py(),v4_ExtraLep.at(i).Pz(),v4_ExtraLep.at(i).E());
+      v4ExtraLep[i].SetPxPyPzE(ExtraLepPx.at(i),ExtraLepPy.at(i),ExtraLepPz.at(i),ExtraLepE.at(i));
+   v4_ExtraLepAdd +=v4ExtraLep[i];//ExtraLep Sum
   }//End of for(Int_t i=0;i<nExtraLep;i++)
- //--v4Jet---//
+ */
+
+  //---Original Method for ExtraLepton---//
+  for(Int_t i=0;i<nExtraLep;i++){
+    if(abs(ExtraLepLepId.at(i))==11){
+      TLorentzVector v4_PEPM;//v4 Container of PtEtaPhiM values
+     v4_PEPM.Clear();
+      v4_PEPM.SetPtEtaPhiM(ExtraLepPt.at(i),ExtraLepEta.at(i),ExtraLepPhi.at(i),e_mass);
+      v4ExtraLep[i].SetPxPyPzE(v4_PEPM.Px(),v4_PEPM.Py(),v4_PEPM.Pz(),v4_PEPM.E());  
+  }//End of (abs(ExtraLepLepId->at(i))==11)
+
+    if(abs(ExtraLepLepId.at(i))==13){
+      TLorentzVector v4_PEPM;//v4 Container of PtEtaPhiM values
+      v4_PEPM.Clear();
+      v4_PEPM.SetPtEtaPhiM(ExtraLepPt.at(i),ExtraLepEta.at(i),ExtraLepPhi.at(i),mu_mass);
+      v4ExtraLep[i].SetPxPyPzE(v4_PEPM.Px(),v4_PEPM.Py(),v4_PEPM.Pz(),v4_PEPM.E());
+    }//End of if(abs(ExtraLepLepId.at(i))==13)
+  
+   v4_ExtraLepAdd +=v4ExtraLep[i];//ExtraLep Sum
+ }//End of for(Int_t i=0;i<nExtraLep;i++)
+
+
+/*
+//--4LeptionsSum--// 
+  for(Int_t i=0;i<nLep;i++){
+      v4Lep[i].SetPxPyPzE(LepPx.at(i),LepPy.at(i),LepPz.at(i),LepE.at(i));
+      v4_allLepSum +=v4Lep[i];      
+  }//End of for(Int_t i=0;i<nExtraLep;i++)
+*/
+
+
+  //---Original Method for Lepton---//
+  for(Int_t i=0;i<nLep;i++){
+      if(abs(LepLepId.at(i))==11){
+      TLorentzVector v4_PEPM;//v4 Container of PtEtaPhiM values
+      v4_PEPM.Clear();
+      v4_PEPM.SetPtEtaPhiM(LepPt.at(i),LepEta.at(i),LepPhi.at(i),e_mass);
+      v4Lep[i].SetPxPyPzE(v4_PEPM.Px(),v4_PEPM.Py(),v4_PEPM.Pz(),v4_PEPM.E());
+    }//End of (abs(ExtraLepLepId->at(i))==11)
+
+    if(abs(LepLepId.at(i))==13){
+      TLorentzVector v4_PEPM;//v4 Container of PtEtaPhiM values
+      v4_PEPM.Clear();
+      v4_PEPM.SetPtEtaPhiM(LepPt.at(i),LepEta.at(i),LepPhi.at(i),mu_mass);
+      v4Lep[i].SetPxPyPzE(v4_PEPM.Px(),v4_PEPM.Py(),v4_PEPM.Pz(),v4_PEPM.E());
+    }//End of if(abs(ExtraLepLepId->at(i))==13)
+  v4_allLepSum +=v4Lep[i];//Lepton Sum
+  }//End of for (Int_t i=0;i<nLep;i++)
+
+//---v4_Jet original Method-----//
   for(Int_t i=0;i<nJet;i++){
-      //v4Jet[i].SetPxPyPzE(v4_Jet.at(i).Px(),v4_Jet.at(i).Py(),v4_Jet.at(i).Pz(),v4_Jet.at(i).E());
       TLorentzVector v4_PEPM;//v4 Containner of PtEtaPhiM values
+      v4_PEPM.Clear();
       v4_PEPM.SetPtEtaPhiM(JetPt.at(i),JetEta.at(i),JetPhi.at(i),JetMass.at(i));
       v4Jet[i].SetPxPyPzE(v4_PEPM.Px(),v4_PEPM.Py(),v4_PEPM.Pz(),v4_PEPM.E());
-      if(i==0){v4_allJetSum[0]+=v4Jet[0];}
-      if(i>0){v4_allJetSum[i]+=v4_allJetSum[i-1]+v4Jet[i];}
-  }//End of for(Int_t i=0;i<nExtraLep;i++)
+      
+        if(i==0){v4_allJetSum[0]+=v4Jet[0];}
+        if(i>0){v4_allJetSum[i]+=v4_allJetSum[i-1]+v4Jet[i];}
+  }//End of for (Int_t i=0;i<nJet;i++)
  
-//--Comparing ZZCandi& 4LeptionsSum 
-  for(Int_t i=0;i<nLep;i++){
-      v4Lep[i].SetPxPyPzE(v4_Lep.at(i).Px(),v4_Lep.at(i).Py(),v4_Lep.at(i).Pz(),v4_Lep.at(i).E());
-      v4_allLepSum1 +=v4Lep[i];      
-  }//End of for(Int_t i=0;i<nExtraLep;i++)
-  
- // Prova1.push_back(v4_allLepSum1.M());//Clara
- 
-  //---v4Leptons vs ZZCand:NOT SAME---//    
-  for(Int_t i=0;i<nCand;i++){
-    v4ZZCand[i].SetPxPyPzE(v4_ZZCand.at(i).Px(),v4_ZZCand.at(i).Py(),v4_ZZCand.at(i).Pz(),v4_ZZCand.at(i).E());
-    //if(nExtraLep==0) {v4ZZCand[i].SetPxPyPzE(v4_ZZCand.at(i).Px(),v4_ZZCand.at(i).Py(),v4_ZZCand.at(i).Pz(),v4_ZZCand.at(i).E());//ExtraLeps are not considered as signal
-  v4_allLepSum +=v4ZZCand[i];
-  }//End of for (Int_t i=0;i<nCand;i++)
-
- //---ZZCand+Jet---//
+ //---4Leptons+Jet---//
+  v4_LepAddTot=v4_ExtraLepAdd+v4_allLepSum;//USE IT ONLY WHEN INCLUDE ADDITIONAL LEPTONS FOR QQ
   v4_allLepJetSum[0]=v4_allLepSum;//nJet=0
-  //Prova1.push_back(v4_allLepJetSum[0].M());
+ 
   for(Int_t i=1;i<nJet+1;i++){//nJet!=0
     v4_allLepJetSum[i]=v4_allLepSum +v4_allJetSum[i-1];//All signal Lepton+Njets
-  // Prova2.push_back(v4_allLepJetSum[i].M());
-  }//End of for(Int_t i=1;i<nJet+1;i++)
-  
- 
-  //---qa Beam vector---//
-  v4_qa[0]=(v4_allLepJetSum[0]*v4_nb)*v4_na;//Beam
-  //Prova1.push_back(v4_qa[0].Mag());
-  for(Int_t i=1;i<nJet+1;i++){
-    v4_qa[i]=(v4_allLepJetSum[i]*v4_nb)*v4_na;
-  //  Prova2.push_back(v4_qa[i].Mag());
   }
 
+  //---qa Beam vector---//
+  v4_qa[0]=(v4_allLepJetSum[0]*v4_nb)*v4_na;//Beam
+  for(Int_t i=1;i<nJet+1;i++){
+    v4_qa[i]=(v4_allLepJetSum[i]*v4_nb)*v4_na;
+  }
   //---qb Beam vector---//
   v4_qb[0]=(v4_allLepJetSum[0]*v4_na)*v4_nb;//Beam
-  //Prova1.push_back(v4_qb[0].Mag());
   for(Int_t i=1;i<nJet+1;i++){
     v4_qb[i]=(v4_allLepJetSum[i]*v4_na)*v4_nb;
-    //Prova2.push_back(v4_qb[i].Mag());
   }
  
   //---QQ:Normalization of Energy Factor---//
   QQ[0]=(v4_allLepJetSum[0]*v4_nb)*(v4_na*v4_allLepJetSum[0]);
-  //Prova1.push_back(QQ[0]);
-  //Prova2.push_back(v4_qb[0]*v4_qa[0]);
   for(Int_t i=1;i<nJet+1;i++){
      QQ[i]=(v4_allLepJetSum[i]*v4_nb)*(v4_na*v4_allLepJetSum[i]);
   }
 
-  //for(Int_t i=0;i<nJet+1;i++){
-  //  Prova2.push_back(QQ[i]);
- // }
   //---Initialization of TauSum[nJet+1]---//
   for(Int_t i=0; i<nJet+1;i++){
     TauSum[i]=0.0;
@@ -2157,7 +2154,7 @@ void HZZ4lNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool e
         for(Int_t k=0;k<jn;k++){
           Tau[jn][k+2]=v4Jet[k]*v4Jet[j];
         }//End of for (Int_t k=0;k<jn;k++)  
-        Float_t min3;
+	Float_t min3;
         min3=Tau[jn][0];
         //-----Find min elemets of Tau------
         for (Int_t m=0;m<jn+2;m++){
@@ -2166,6 +2163,7 @@ void HZZ4lNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool e
         TauSum[jn] +=min3;
       }//End of for (Int_t j=jn;j<nJet;j++)
       if(jn==nJet) TauSum[jn]=0.;
+      
       Jettiness.push_back(TauSum[jn]/QQ[jn]);
     }//End of for (Int_t jn=0;jn<nJet+1;jn++) 
   }//End of if(nExtraLep==0)
@@ -2190,7 +2188,7 @@ void HZZ4lNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool e
       }//End of for (Int_t j=jn;j<nJet;j++)
       for (Int_t j=0;j<nExtraLep;j++){
         Tau[jn][0]=v4_qa[jn]*v4ExtraLep[j];
-        Tau[jn][1]=v4_qa[jn]*v4ExtraLep[j];
+        Tau[jn][1]=v4_qb[jn]*v4ExtraLep[j];
         for(Int_t k=0;k<jn;k++){
           Tau[jn][k+2]=v4Jet[k]*v4ExtraLep[j];
         }//End of for(Int_t k=0;k<jn;k++)
@@ -2198,32 +2196,18 @@ void HZZ4lNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool e
       min3=Tau[jn][0];
         for(Int_t m=0;m<jn+2;m++){
           if(Tau[jn][m]<min3) min3=Tau[jn][m];
+          //mintau[jn].push_back(min3);
         }//End of for (Int_t m=0;m<jn+2;m++)
       TauSum[jn]+=min3; 
       }//End of for(Int_t j=0;j<ExtraLep_N;j++)
-
+      
       Jettiness.push_back(TauSum[jn]/QQ[jn]);
     }//End of for (Int_t jn=0;jn<nJet+1;jn++) 
   }//End of if(nExtraLep!=0)
+ //}//End of if(EventNumber==68417 && LumiNumber==12)
+ 
 
-/*
-  edm::Handle<edm::View<pat::CompositeCandidate> > candHandle;
-  event.getByToken(candToken, candHandle);
-  const edm::View<pat::CompositeCandidate>* cands = candHandle.product(); 
-  for( edm::View<pat::CompositeCandidate>::const_iterator cand = cands->begin(); cand != cands->end(); ++cand) {
-    //if (failed) break; //don't waste time on this
-    size_t icand= cand-cands->begin();
-    
-    //if(theChannel!=ZL){
-    //Int_t nJet;
-    //nJet=jet->size();
-    //}//End of if(theChannel!=ZL)
-
-  }//End of for for( edm::View<pat::CompositeCandidate>::const_iterator cand = cands->begin(); cand != cands->end(); ++cand)
-*/
-
-}//End of void HZZ4lNtupleMaker::FillCandidat()
-
+}//End of void HZZ4lNtupleMaker::FillCandidat
 
 void HZZ4lNtupleMaker::getCheckedUserFloat(const pat::CompositeCandidate& cand, const std::string& strval, Float_t& setval, Float_t defaultval){
   if (cand.hasUserFloat(strval)) setval = cand.userFloat(strval);
@@ -2639,10 +2623,11 @@ void HZZ4lNtupleMaker::BookAllBranches(){
     myTree->Book("TLE_min_dR_3l",TLE_min_dR_3l, false);
   }
 
-  myTree->Book("Jettiness",Jettiness, false);//Clara, for try
- // myTree->Book("v4_Lep",v4_Lep, false);//Clara, for try
-  myTree->Book("Prova1",Prova1, false);//Clara, for try
-  myTree->Book("Prova2",Prova2, false);//Clara, for try
+  myTree->Book("Jettiness",Jettiness, false);//clara
+  myTree->Book("LepPx",LepPx, false);//clara
+  myTree->Book("LepPy",LepPy, false);//clara
+  myTree->Book("LepPz",LepPz, false);//clara
+  myTree->Book("LepE",LepE, false);//clara
   myTree->Book("LepPt",LepPt, false);
   myTree->Book("LepEta",LepEta, false);
   myTree->Book("LepPhi",LepPhi, false);
@@ -2690,7 +2675,7 @@ void HZZ4lNtupleMaker::BookAllBranches(){
     myTree->Book("fsrGenPt",fsrGenPt, false);
   }
 
-  //Jet variables
+
   myTree->Book("JetPt",JetPt, failedTreeLevel >= fullFailedTree);
   myTree->Book("JetEta",JetEta, failedTreeLevel >= fullFailedTree);
   myTree->Book("JetPhi",JetPhi, failedTreeLevel >= fullFailedTree);
@@ -2741,7 +2726,10 @@ void HZZ4lNtupleMaker::BookAllBranches(){
   myTree->Book("ExtraLepEta",ExtraLepEta, false);
   myTree->Book("ExtraLepPhi",ExtraLepPhi, false);
   myTree->Book("ExtraLepLepId",ExtraLepLepId, false);
-
+  myTree->Book("ExtraLepPx",ExtraLepPx, false);//clara
+  myTree->Book("ExtraLepPy",ExtraLepPy, false);//clara
+  myTree->Book("ExtraLepPz",ExtraLepPz, false);//clara
+  myTree->Book("ExtraLepE",ExtraLepE, false);//clara
   myTree->Book("ZXFakeweight", ZXFakeweight, false);
 
   if (isMC){
@@ -3413,7 +3401,7 @@ void HZZ4lNtupleMaker::updateMELAClusters_BestNLOVBFApproximation(const string c
 
 void HZZ4lNtupleMaker::pushRecoMELABranches(const pat::CompositeCandidate& cand){
   std::vector<MELABranch*>* recome_branches = myTree->getRecoMELABranches();
-  // Pull + push...
+ //Pull+push...
   for (unsigned int ib=0; ib<recome_branches->size(); ib++){
     std::string branchname = recome_branches->at(ib)->bname.Data();
     if (cand.hasUserFloat(branchname)) recome_branches->at(ib)->setValue((Float_t)cand.userFloat(branchname));
@@ -3424,7 +3412,7 @@ void HZZ4lNtupleMaker::pushLHEMELABranches(){
   std::vector<MELABranch*>* lheme_branches = myTree->getLHEMELABranches();
   // Pull + push...
   for (unsigned int ib=0; ib<lheme_branches->size(); ib++) lheme_branches->at(ib)->setVal();
-  // ...then reset
+   // ...then reset
   for (unsigned int ic=0; ic<lheme_clusters.size(); ic++) lheme_clusters.at(ic)->reset();
 }
 void HZZ4lNtupleMaker::clearMELABranches(){
@@ -3433,7 +3421,7 @@ void HZZ4lNtupleMaker::clearMELABranches(){
   for (unsigned int it=0; it<lheme_copyopts.size(); it++) delete lheme_copyopts.at(it);
   //for (unsigned int it=0; it<lheme_aliased_units.size(); it++) delete lheme_aliased_units.at(it); // DO NOT DELETE THIS, WILL BE DELETED WITH lheme_units!
   for (unsigned int it=0; it<lheme_units.size(); it++) delete lheme_units.at(it);
-
+  
   for (unsigned int it=0; it<recome_copyopts.size(); it++) delete recome_copyopts.at(it);
   for (unsigned int it=0; it<recome_originalopts.size(); it++) delete recome_originalopts.at(it);
 }
